@@ -1,0 +1,26 @@
+Landing Page:
+    Picture
+    Log Line about the app
+    Get Started button
+    Components:
+        NavBar w/ log-in option at top right
+        Log-in => routes to dashboard
+        Sign-up Wizard
+
+NavBar:
+    Logo
+    Log-in
+    (after auth):
+    Browse Artists
+    Browse Venues
+    Dashboard/home
+    Search bar
+    avatar: drop down for profile, events, requests, messages
+
+Sign-up Wizard:
+    Form for credentials
+    Form for profile set up
+    Redirects to Dashboard(auto logs in)
+
+Dashboard:
+    Events feed
