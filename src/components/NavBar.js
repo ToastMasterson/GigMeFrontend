@@ -1,7 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
+import CssBaseLine from '@material-ui/core/CssBaseline'
+import useScrollTrigger  from '@material-ui/core/useScrollTrigger'
+import Box from '@material-ui/core/Box'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,10 +20,24 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import SettingsIcon from '@material-ui/icons/Settings';
+import ListItemText from '@material-ui/core/ListItemText';
+import ChatIcon from '@material-ui/icons/Chat';
+import EventIcon from '@material-ui/icons/Event';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
+
+import '../style_sheets/NavBar.css'
+import { ListItemIcon } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1,
+  },
+  colorPrimary: {
+    color: 'black'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -79,8 +97,87 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+function ElevationScroll(props) {
+    const { children, window } = props;
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined,
+    });
+
+    return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+    });
+}
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+    <Typography
+        component="div"
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+    >
+        {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})(props => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem = withStyles(theme => ({
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.primary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white,
+        },
+      },
+    },
+}))(MenuItem);
+
+export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -104,6 +201,10 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -115,8 +216,30 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <StyledMenuItem onClick={handleMenuClose}>
+          <ListItemIcon>
+              <AccountCircle fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
+      </StyledMenuItem>
+      <StyledMenuItem onClick={handleMenuClose}>
+        <ListItemIcon>
+            <SettingsIcon fontSize="small" />
+        </ListItemIcon>
+        <ListItemText primary="Account" />
+      </StyledMenuItem>
+      <StyledMenuItem onClick={handleMenuClose}>
+          <ListItemIcon>
+              <PersonAddIcon />
+          </ListItemIcon>
+          <ListItemText primary="Requests" />
+      </StyledMenuItem>
+      <StyledMenuItem onClick={handleMenuClose}>
+          <ListItemIcon>
+              <EventIcon />
+          </ListItemIcon>
+          <ListItemText primary="Calendar" />
+      </StyledMenuItem>
     </Menu>
   );
 
@@ -133,15 +256,15 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
+          <Badge badgeContent={0} color="secondary">
+            <ChatIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
+          <Badge badgeContent={0} color="secondary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -163,70 +286,70 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+        <CssBaseLine />
+        <ElevationScroll {...props}>
+            <AppBar position="static" style={{ color: '#5497c7', backgroundColor: '#2a2a2d'}}>
+                <Toolbar>
+                <Typography className={classes.title} variant="h6" noWrap>
+                    <img className="navbar-logo" src="https://i.imgur.com/mQWWPgC.png" alt="main-logo"/>
+                </Typography>
+                <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                    <SearchIcon />
+                    </div>
+                    <InputBase
+                    placeholder="Search…"
+                    classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                    />
+                </div>
+                <Tabs value={value} onChange={handleChange}>
+                    <Tab label="Dashboard" {...a11yProps(0)} />
+                    <Tab label="Artists" {...a11yProps(1)} />
+                    <Tab label="Venues" {...a11yProps(2)} />
+                </Tabs>
+                <div className={classes.grow} />
+                <div className={classes.sectionDesktop}>
+                    <IconButton aria-label="show 4 new mails" color="inherit">
+                    <Badge badgeContent={0} color="secondary">
+                        <ChatIcon />
+                    </Badge>
+                    </IconButton>
+                    <IconButton aria-label="show 17 new notifications" color="inherit">
+                    <Badge badgeContent={0} color="secondary">
+                        <NotificationsIcon />
+                    </Badge>
+                    </IconButton>
+                    <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                    >
+                    <AccountCircle />
+                    </IconButton>
+                </div>
+                <div className={classes.sectionMobile}>
+                    <IconButton
+                    aria-label="show more"
+                    aria-controls={mobileMenuId}
+                    aria-haspopup="true"
+                    onClick={handleMobileMenuOpen}
+                    color="inherit"
+                    >
+                    <MoreIcon />
+                    </IconButton>
+                </div>
+                </Toolbar>
+            </AppBar>
+        </ElevationScroll>
+        {renderMobileMenu}
+        {renderMenu}
     </div>
   );
 }
