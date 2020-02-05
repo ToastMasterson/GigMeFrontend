@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, Redirect } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
 import CssBaseLine from '@material-ui/core/CssBaseline'
 import useScrollTrigger  from '@material-ui/core/useScrollTrigger'
@@ -14,10 +13,8 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Tabs from '@material-ui/core/Tabs'
@@ -95,6 +92,10 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  menuLink: {
+    color: 'black',
+    textDecoration: 'none'
+  }
 }));
 
 function ElevationScroll(props) {
@@ -142,26 +143,6 @@ function a11yProps(index) {
         'aria-controls': `simple-tabpanel-${index}`,
     };
 }
-
-const StyledMenu = withStyles({
-    paper: {
-        border: '1px solid #d3d4d5',
-    },
-})(props => (
-    <Menu
-        elevation={0}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-        }}
-        {...props}
-    />
-));
 
 const StyledMenuItem = withStyles(theme => ({
     root: {
@@ -216,30 +197,38 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <StyledMenuItem onClick={handleMenuClose}>
-          <ListItemIcon>
-              <AccountCircle fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
-      </StyledMenuItem>
-      <StyledMenuItem onClick={handleMenuClose}>
-        <ListItemIcon>
-            <SettingsIcon fontSize="small" />
-        </ListItemIcon>
-        <ListItemText primary="Account" />
-      </StyledMenuItem>
-      <StyledMenuItem onClick={handleMenuClose}>
-          <ListItemIcon>
-              <PersonAddIcon />
-          </ListItemIcon>
-          <ListItemText primary="Requests" />
-      </StyledMenuItem>
-      <StyledMenuItem onClick={handleMenuClose}>
-          <ListItemIcon>
-              <EventIcon />
-          </ListItemIcon>
-          <ListItemText primary="Calendar" />
-      </StyledMenuItem>
+        <Link className={classes.menuLink} to="/profile">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <AccountCircle fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
+            </StyledMenuItem>
+        </Link>
+        <Link className={classes.menuLink} to="/settings">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <SettingsIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Account" />
+            </StyledMenuItem>
+        </Link>
+        <Link className={classes.menuLink} to="/requests">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Requests" />
+            </StyledMenuItem>
+        </Link>
+        <Link className={classes.menuLink} to="/calendar">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <EventIcon />
+                </ListItemIcon>
+                <ListItemText primary="Calendar" />
+            </StyledMenuItem>
+        </Link>
     </Menu>
   );
 
@@ -291,7 +280,9 @@ export default function PrimarySearchAppBar(props) {
             <AppBar position="static" style={{ color: '#5497c7', backgroundColor: '#2a2a2d'}}>
                 <Toolbar>
                 <Typography className={classes.title} variant="h6" noWrap>
-                    <img className="navbar-logo" src="https://i.imgur.com/mQWWPgC.png" alt="main-logo"/>
+                    <Link to="/">
+                        <img className="navbar-logo" src="https://i.imgur.com/mQWWPgC.png" alt="main-logo"/>
+                    </Link>
                 </Typography>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -307,7 +298,7 @@ export default function PrimarySearchAppBar(props) {
                     />
                 </div>
                 <Tabs value={value} onChange={handleChange}>
-                    <Tab label="Dashboard" {...a11yProps(0)} />
+                    <Tab label="Dashboard" {...a11yProps(0)} component={Link} to="/dashboard" />
                     <Tab label="Artists" {...a11yProps(1)} />
                     <Tab label="Venues" {...a11yProps(2)} />
                 </Tabs>

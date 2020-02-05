@@ -25,11 +25,6 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        // borderLeft: 'white',
-        // borderRight: 'white',
-        // borderTop: 'none',
-        // borderBottom: 'none',
-        // borderStyle: 'solid'
     },
     box: {
         margin: 20
