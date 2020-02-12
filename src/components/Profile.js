@@ -5,17 +5,18 @@ import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
-import Button from '@material-ui/core/Button'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import EmailIcon from '@material-ui/icons/Email';
+import FacebookIcon from '@material-ui/icons/Facebook'
+import InstagramIcon from '@material-ui/icons/Instagram'
+import TwitterIcon from '@material-ui/icons/Twitter'
 import {ReactComponent as BandcampIcon} from '../svg/bandcamp.svg'
 import {ReactComponent as SoundcloudIcon} from '../svg/soundcloud.svg'
 import {ReactComponent as SpotifyIcon} from '../svg/spotify.svg'
 import { makeStyles } from '@material-ui/core'
+
+import Activity from './profile/Activity';
+import Shows from './profile/Shows'
 
 const useStyles = makeStyles(theme => ({
     grid: {
@@ -31,7 +32,6 @@ const useStyles = makeStyles(theme => ({
     bannerArea: {
         height: '80%',
         backgroundImage: `url(${'https://i.imgur.com/DIgvyTp.png'})`,
-        backgroundSize: '100%', 
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         borderBottomStyle: 'solid',
@@ -54,9 +54,9 @@ const useStyles = makeStyles(theme => ({
     },
     sidebar: {
         backgroundColor: '#5497c7eb',
-        height: '100vh',
         padding: '20px',
-        borderRightStyle: 'solid'
+        borderRightStyle: 'solid',
+        height: '100%'
     },
     tabs: {
         width: '100%',
@@ -75,6 +75,9 @@ const useStyles = makeStyles(theme => ({
     },
     subtitle2: {
         fontSize: '1.2rem'
+    },
+    tab: {
+        color: '#5497c7'
     }
 }))
 
@@ -93,7 +96,7 @@ const Profile = () => {
         <div className="Profile">
             <CssBaseLine />
             <Container maxWidth="lg">
-                <Typography component="div" style={{ backgroundColor: 'black', height: '100vh' }}>
+                <Typography component="div" style={{ backgroundColor: 'black' }}>
                     <Paper elevation={5} square={true}>
                         <Grid container className={classes.grid} spacing={0} direction="row">
                             <Grid item xs={3}>
@@ -108,14 +111,12 @@ const Profile = () => {
                                     className={classes.tabs}
                                     value={value}
                                     onChange={handleChange}
-                                    indicatorColor="primary"
-                                    textColor="primary"
                                     centered
                                 >
-                                    <Tab label="Overview" />
-                                    <Tab label="Shows" />
-                                    <Tab label="Music" />
-                                    <Tab label="Network" />
+                                    <Tab className={classes.tab} label="Activity" />
+                                    <Tab className={classes.tab} label="Shows" />
+                                    <Tab className={classes.tab} label="Music" />
+                                    <Tab className={classes.tab} label="Network" />
                                 </Tabs>
                                 </Grid>
                             </Grid>
@@ -191,10 +192,14 @@ const Profile = () => {
                                 </Paper>
                             </Grid>
                             <Grid item xs={9}>
-                                <Paper className={classes.rendered} square elevation={1}>
-                                    hellloo
-                                </Paper>
+                                {value === 0
+                                    ? <Activity />
+                                    : value === 1
+                                        ? <Shows />
+                                        : null
+                                }
                             </Grid>
+                            
                         </Grid>
                     </Paper>
                 </Typography>

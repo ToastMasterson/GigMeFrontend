@@ -129,7 +129,7 @@ const Dashboard = () => {
                         </Box>
                         <Divider className={classes.divider} variant="middle" />
                         <Grid container direction="column" alignItems="center" justify="center" spacing={2}>
-                            {[0, 1, 2].map(value => (
+                            a
                                 <Grid item xs={12} className={classes.root}>
                                     <Paper className={classes.paper}>
                                         <Grid container spacing={2}>
