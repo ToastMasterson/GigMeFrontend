@@ -12,7 +12,7 @@ const columns = [
 
 const useStyles = makeStyles({
     paper: { width: '100%' },
-    container: { maxHeight: 440 },
+    container: { height: '100vh' },
     row: { height: '150px' },
     img: { width: '100%', maxWidth: '100px' }
 })

@@ -5,6 +5,9 @@ import { Grid, Paper, Typography, List, ListItem, ListItemText, Divider } from '
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
+    page: {
+        height: '100vh'
+    },
     albumCover: {
         maxWidth: '200px'
     },
@@ -34,8 +37,8 @@ const Music = () => {
 
     return (
         <div className="Music">
-            <Grid container direction="row" justify="center">
-                <Grid item container direction="column" justify="center" alignItems="center" xs={6}>
+            <Grid className={classes.page} container direction="row" justify="center">
+                <Grid item container direction="column" alignItems="center" xs={6}>
                     <Grid item>
                         <Typography variant='h2'>
                             Releases
