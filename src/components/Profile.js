@@ -17,6 +17,7 @@ import { makeStyles } from '@material-ui/core'
 
 import Activity from './profile/Activity';
 import Shows from './profile/Shows'
+import Music from './profile/Music'
 
 const useStyles = makeStyles(theme => ({
     grid: {
@@ -196,7 +197,9 @@ const Profile = () => {
                                     ? <Activity />
                                     : value === 1
                                         ? <Shows />
-                                        : null
+                                        : value === 2
+                                            ? <Music />
+                                            : null
                                 }
                             </Grid>
                             
