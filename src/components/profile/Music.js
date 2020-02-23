@@ -21,13 +21,24 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         color: 'white'
     },
+    playerArea: {
+        height: '50%'
+    },
     player: {
         width: '70%',
         backgroundColor: '#171d29e8'
     },
     controls: {
         width: '100%'
-    }
+    },
+    divider: {
+        margin: '10px',
+        width: '90%'
+    },
+    header: {
+        textAlign: 'center',
+        margin: '20px'
+    },
 
 }))
 
@@ -40,10 +51,11 @@ const Music = () => {
             <Grid className={classes.page} container direction="row" justify="center">
                 <Grid item container direction="column" alignItems="center" xs={6}>
                     <Grid item>
-                        <Typography variant='h2'>
+                        <Typography className={classes.header} variant='h4'>
                             Releases
                         </Typography>
                     </Grid>
+                    <Divider className={classes.divider} />
                     <Grid item container className={classes.releases} direction="row" spacing={3}>
                         <Grid item>
                             <Paper className={classes.albumCover}>
@@ -62,7 +74,7 @@ const Music = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item container direction="column" justify="center" alignItems="center" xs={6}>
+                <Grid className={classes.playerArea} item container direction="column" justify="center" alignItems="center" xs={6}>
                     <Paper className={classes.player}>
                         <ReactAudioPlayer className={classes.controls} src={Daydream} controls controlsList="nodownload" />
                         <List className={classes.trackList}>

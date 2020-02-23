@@ -5,10 +5,8 @@ import {
     Typography, 
     Card, 
     CardActionArea, 
-    CardActions, 
     CardContent, 
     CardMedia, 
-    Button, 
     Paper,
     Divider
 } from '@material-ui/core'
@@ -27,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         backgroundSize: 'cover'
     },
     divider: {
-        margin: '10px'
+        margin: '10px',
     },
     header: {
         textAlign: 'center',
@@ -61,11 +59,6 @@ const Network = () => {
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions>
-                                <Button size="small">
-                                    Visit
-                                </Button>
-                            </CardActions>
                         </Card>
                     </Grid>
                     <Grid item>
@@ -82,11 +75,6 @@ const Network = () => {
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardActions>
-                                <Button size="small">
-                                    Visit
-                                </Button>
-                            </CardActions>
                         </Card>
                     </Grid>
                 </Grid>

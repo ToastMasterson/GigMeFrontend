@@ -4,9 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
-import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
 import Avatar from '@material-ui/core/Avatar'
 import Divider from '@material-ui/core/Divider'
 import { makeStyles } from '@material-ui/core'
@@ -28,9 +26,6 @@ const useStyles = makeStyles(theme => ({
     divider: {
         margin: '10px'
     },
-    content: {
-        // padding: '30px'
-    }
 }))
 
 const Activity = () => {
