@@ -17,6 +17,8 @@ import {
     Card, CardMedia, CardContent 
 } from '@material-ui/core'
 
+import FilterBar from './DiscoverArtists/FilterBar'
+
 const genresList = [
     "Alternative", 
     "Electronic", 
@@ -95,10 +97,22 @@ const DiscoverArtists = () => {
     const classes = useStyles()
 
     const [sortBy, setSortBy] = React.useState('')
+    const [filterQuery, setFilterQuery] = React.useState('')
+    const [inputState, setInputState] = React.useState('')
+    const [inputCity, setInputCity] = React.useState('')
 
-    const handleChange = event => {
-        setSortBy(event.target.value);
-      }
+    const setSort = input => {
+        setSortBy(input);
+    }
+    const setStates = input => {
+        setInputState(input);
+    }
+    const setCities = input => {
+        setInputCity(input);
+    }
+    const setFilter = input => {
+        setFilterQuery(input)
+    }
     
     return(
         <div className="DiscoverArtists">
@@ -129,25 +143,16 @@ const DiscoverArtists = () => {
                                     </List>
                                 </Grid>
                                 <Grid item container direction="column" xs={9} spacing={3}>
-                                        <Grid item container direction="row" justify="space-evenly">
-                                            <Paper>
-                                                <Grid item>
-                                                    <TextField id="outlined-basic" label="Filter by Name" />
-                                                </Grid>
-                                            </Paper>
-                                            <Paper>
-                                                <Grid item>
-                                                    <Select value={sortBy} onChange={handleChange} displayEmpty>
-                                                        <MenuItem value="" disabled>
-                                                            Sort By
-                                                        </MenuItem>
-                                                        <MenuItem value={1}>Alphabetical</MenuItem>
-                                                        <MenuItem value={2}>Plays</MenuItem>
-                                                        <MenuItem value={3}>Distance</MenuItem>
-                                                    </Select>
-                                                </Grid>
-                                            </Paper>
-                                        </Grid>
+                                    <FilterBar 
+                                        setSort={setSort} 
+                                        setStates={setStates} 
+                                        setCities={setCities}
+                                        setFilter={setFilter}
+                                        state={inputState} 
+                                        city={inputCity} 
+                                        sort={sortBy} 
+                                        filter={filterQuery} 
+                                    />
                                     <Grid item container direction="row" justify="space-evenly" spacing={2}>
                                         {artistList.map(artist => (
                                             <Grid item xs={3}>
