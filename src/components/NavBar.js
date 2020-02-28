@@ -1,10 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
 import CssBaseLine from '@material-ui/core/CssBaseline'
 import useScrollTrigger  from '@material-ui/core/useScrollTrigger'
-import Box from '@material-ui/core/Box'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,13 +15,12 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
 import SettingsIcon from '@material-ui/icons/Settings';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChatIcon from '@material-ui/icons/Chat';
 import EventIcon from '@material-ui/icons/Event';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import {Link as NavLink, Container} from '@material-ui/core' 
 
 
 import '../style_sheets/NavBar.css'
@@ -95,14 +92,19 @@ const useStyles = makeStyles(theme => ({
   menuLink: {
     color: 'black',
     textDecoration: 'none'
+  },
+  navLinks: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  link: {
+    color: "#5397c7"
   }
 }));
 
 function ElevationScroll(props) {
     const { children, window } = props;
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
     const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -112,36 +114,6 @@ function ElevationScroll(props) {
     return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
     });
-}
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-    <Typography
-        component="div"
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-    >
-        {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
 }
 
 const StyledMenuItem = withStyles(theme => ({
@@ -157,34 +129,29 @@ const StyledMenuItem = withStyles(theme => ({
 
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
+  const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+    setMobileMoreAnchorEl(null)
+  }
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
+    setAnchorEl(null)
+    handleMobileMenuClose()
+  }
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -297,11 +264,11 @@ export default function PrimarySearchAppBar(props) {
                     inputProps={{ 'aria-label': 'search' }}
                     />
                 </div>
-                <Tabs value={value} onChange={handleChange}>
-                    <Tab label="Dashboard" {...a11yProps(0)} component={Link} to="/dashboard" />
-                    <Tab label="Artists" {...a11yProps(1)} component={Link} to="/discover_artists" />
-                    <Tab label="Venues" {...a11yProps(2)} />
-                </Tabs>
+                <Container className={classes.navLinks}>
+                    <NavLink className={classes.link} component={Link} to="/dashboard" >Dashboard</NavLink>
+                    <NavLink className={classes.link} component={Link} to="/discover_artists">Artists</NavLink>
+                    <NavLink className={classes.link}>Venues</NavLink>
+                </Container>
                 <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
                     <IconButton aria-label="show 4 new mails" color="inherit">
