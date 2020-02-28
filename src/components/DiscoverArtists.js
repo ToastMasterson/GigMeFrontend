@@ -1,7 +1,37 @@
 import React from 'react'
-import { makeStyles, withStyles, CssBaseline, Container, Paper, Typography, Grid, List, ListItem, ListItemText, Divider, TextField, MenuItem, Select, Card, CardMedia, CardContent } from '@material-ui/core'
 
-const genresList = ["Alternative", "Electronic", "Rock", "Indie", "Jazz", "Blues", "R&B", "Hip-Hop", "Metal", "Country", "Bluegrass", "Pop"]
+import { 
+    makeStyles, 
+    CssBaseline, 
+    Container, 
+    Paper, 
+    Typography, 
+    Grid, 
+    List, 
+    ListItem, 
+    ListItemText, 
+    Divider, 
+    TextField, 
+    MenuItem, 
+    Select, 
+    Card, CardMedia, CardContent 
+} from '@material-ui/core'
+
+const genresList = [
+    "Alternative", 
+    "Electronic", 
+    "Rock", 
+    "Indie", 
+    "Jazz", 
+    "Blues", 
+    "R&B", 
+    "Hip-Hop", 
+    "Metal", 
+    "Country", 
+    "Bluegrass", 
+    "Pop"
+]
+
 const artistList = [
     {
         image: "https://4.bp.blogspot.com/-GcVBKmNeuTw/Wt-OeNSt6CI/AAAAAAAArUE/yUOBeWI4Icg3ATVgjxFM3Y2egExjMGISQCLcBGAs/s1600/josie1.jpg", 
@@ -129,16 +159,13 @@ const DiscoverArtists = () => {
                                                         </Typography>
                                                     </CardContent>
                                                 </Card>
-                                            </Grid>
-                                                
+                                            </Grid>    
                                         ))}
                                     </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
-
                     </Paper>
-
                 </Typography>
             </Container>
         </div>
