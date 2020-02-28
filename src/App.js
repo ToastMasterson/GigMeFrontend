@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard'
 import Landing from './components/Landing'
 import Profile from './components/Profile'
+import DiscoverArtists from './components/DiscoverArtists'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" exact component={Landing}/>
           <Route path="/dashboard" component={Dashboard}/>
           <Route path="/profile" component={Profile}/>
+          <Route path="/discover_artists" component={DiscoverArtists}/>
         </Switch>
       </div>
     </Router>

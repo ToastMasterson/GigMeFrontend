@@ -299,7 +299,7 @@ export default function PrimarySearchAppBar(props) {
                 </div>
                 <Tabs value={value} onChange={handleChange}>
                     <Tab label="Dashboard" {...a11yProps(0)} component={Link} to="/dashboard" />
-                    <Tab label="Artists" {...a11yProps(1)} />
+                    <Tab label="Artists" {...a11yProps(1)} component={Link} to="/discover_artists" />
                     <Tab label="Venues" {...a11yProps(2)} />
                 </Tabs>
                 <div className={classes.grow} />
