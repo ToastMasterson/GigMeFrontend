@@ -1,30 +1,30 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
+import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
 import CssBaseLine from '@material-ui/core/CssBaseline'
 import useScrollTrigger  from '@material-ui/core/useScrollTrigger'
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ListItemText from '@material-ui/core/ListItemText';
-import ChatIcon from '@material-ui/icons/Chat';
-import EventIcon from '@material-ui/icons/Event';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import {Link as NavLink, Container} from '@material-ui/core' 
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import InputBase from '@material-ui/core/InputBase'
+import Badge from '@material-ui/core/Badge'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
+import SearchIcon from '@material-ui/icons/Search'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import NotificationsIcon from '@material-ui/icons/Notifications'
+import MoreIcon from '@material-ui/icons/MoreVert'
+import SettingsIcon from '@material-ui/icons/Settings'
+import ListItemText from '@material-ui/core/ListItemText'
+import ChatIcon from '@material-ui/icons/Chat'
+import EventIcon from '@material-ui/icons/Event'
+import PersonAddIcon from '@material-ui/icons/PersonAdd'
+import {Link as NavLink, Container, Grid, Hidden, Divider} from '@material-ui/core' 
 
 
 import '../style_sheets/NavBar.css'
-import { ListItemIcon } from '@material-ui/core';
+import { ListItemIcon } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -101,19 +101,19 @@ const useStyles = makeStyles(theme => ({
   link: {
     color: "#5397c7"
   }
-}));
+}))
 
 function ElevationScroll(props) {
-    const { children, window } = props;
+    const { children, window } = props
     const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
     target: window ? window() : undefined,
-    });
+    })
 
     return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
-    });
+    })
 }
 
 const StyledMenuItem = withStyles(theme => ({
@@ -125,16 +125,16 @@ const StyledMenuItem = withStyles(theme => ({
         },
       },
     },
-}))(MenuItem);
+}))(MenuItem)
 
 export default function PrimarySearchAppBar(props) {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
   const isMenuOpen = Boolean(anchorEl)
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget)
@@ -150,10 +150,11 @@ export default function PrimarySearchAppBar(props) {
   }
 
   const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget);
+    setMobileMoreAnchorEl(event.currentTarget)
   }
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = 'primary-search-account-menu'
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -197,9 +198,9 @@ export default function PrimarySearchAppBar(props) {
             </StyledMenuItem>
         </Link>
     </Menu>
-  );
+  )
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = 'primary-search-account-menu-mobile'
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -210,35 +211,57 @@ export default function PrimarySearchAppBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={0} color="secondary">
-            <ChatIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={0} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <Link className={classes.menuLink} to="/profile">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <AccountCircle fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
+            </StyledMenuItem>
+        </Link>
+        <Link className={classes.menuLink} to="/messages">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <ChatIcon />
+                </ListItemIcon>
+                <ListItemText primary="Messages" />
+            </StyledMenuItem>
+        </Link>
+        <Link className={classes.menuLink} to="/requests">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <NotificationsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Requests" />
+            </StyledMenuItem>
+        </Link>
+        <Divider />
+        <Link className={classes.menuLink} to="/settings">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <SettingsIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Account" />
+            </StyledMenuItem>
+        </Link>
+        <Link className={classes.menuLink} to="/requests">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Requests" />
+            </StyledMenuItem>
+        </Link>
+        <Link className={classes.menuLink} to="/calendar">
+            <StyledMenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                    <EventIcon />
+                </ListItemIcon>
+                <ListItemText primary="Calendar" />
+            </StyledMenuItem>
+        </Link>
     </Menu>
-  );
+  )
 
   return (
     <div className={classes.grow}>
@@ -246,7 +269,7 @@ export default function PrimarySearchAppBar(props) {
         <ElevationScroll {...props}>
             <AppBar position="static" style={{ color: '#5497c7', backgroundColor: '#2a2a2d'}}>
                 <Toolbar>
-                <Typography className={classes.title} variant="h6" noWrap>
+                <Typography className={classes.title}>
                     <Link to="/">
                         <img className="navbar-logo" src="https://i.imgur.com/mQWWPgC.png" alt="main-logo"/>
                     </Link>
@@ -264,11 +287,19 @@ export default function PrimarySearchAppBar(props) {
                     inputProps={{ 'aria-label': 'search' }}
                     />
                 </div>
-                <Container className={classes.navLinks}>
-                    <NavLink className={classes.link} component={Link} to="/dashboard" >Dashboard</NavLink>
-                    <NavLink className={classes.link} component={Link} to="/discover_artists">Artists</NavLink>
-                    <NavLink className={classes.link}>Venues</NavLink>
-                </Container>
+                <Hidden xsDown>
+                  <Grid container spacing={2}>
+                    <Grid item>
+                      <NavLink className={classes.link} component={Link} to="/dashboard" >Dashboard</NavLink>
+                    </Grid>
+                    <Grid item>
+                      <NavLink className={classes.link} component={Link} to="/discover_artists">Artists</NavLink>
+                    </Grid>
+                    <Grid item>
+                      <NavLink className={classes.link}>Venues</NavLink>
+                    </Grid>
+                  </Grid>
+                </Hidden>
                 <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
                     <IconButton aria-label="show 4 new mails" color="inherit">
@@ -309,5 +340,5 @@ export default function PrimarySearchAppBar(props) {
         {renderMobileMenu}
         {renderMenu}
     </div>
-  );
+  )
 }
