@@ -20,6 +20,7 @@ import Activity from './profile/Activity';
 import Shows from './profile/Shows'
 import Music from './profile/Music'
 import Network from './profile/Network'
+import About from './profile/About'
 
 const useStyles = makeStyles(theme => ({
     grid: {
@@ -31,6 +32,15 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    mobileHeader: {
+        color: 'white'
+    },
+    mobileSocial: {
+        backgroundColor: '#4d8bb7',
+        color: 'black',
+        width: '60%',
+        borderRadius: '30px'
     },
     bannerArea: {
         width: '100%',
@@ -45,7 +55,8 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         backgroundImage: `url(${'https://i.imgur.com/DIgvyTp.png'})`,
         backgroundPosition: 'center',
-        backgroundSize: 'cover',
+        backgroundSize: 'inherit',
+        backgroundRepeat: 'no-repeat',
         borderBottomStyle: 'solid',
         borderWidth: 'medium',
     },
@@ -55,6 +66,13 @@ const useStyles = makeStyles(theme => ({
         borderStyle: 'solid',
         borderTopStyle: 'none',
         borderLeftStyle: 'none'
+    },
+    mobileProfileImage: {
+        width: '100%',
+        height: '100%',
+        borderStyle: 'solid',
+        borderRadius: '50%',
+        borderColor: 'white'
     },
     genresLocation: {
         alignItems: 'center'
@@ -97,9 +115,28 @@ const Profile = () => {
     const classes = useStyles()
 
     const [value, setValue] = React.useState(0)
+    const [view, setView] = React.useState("")
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setValue(newValue)
+        setView(event.target.innerText)
+    }
+
+    const checkTabValue = () => {
+        switch(view) {
+            case 'ABOUT':
+                return <About />
+            case 'ACTIVITY':
+                return <Activity />
+            case 'SHOWS':
+                return <Shows />
+            case 'MUSIC':
+                return <Music />
+            case 'NETWORK':
+                return <Network />
+            default:
+                return <Activity />
+        }
     }
 
     return (
@@ -114,9 +151,7 @@ const Profile = () => {
                                     <img className={classes.profileImage} src="https://f4.bcbits.com/img/a3508620901_16.jpg" alt="profile" />
                                 </Grid>
                                 <Grid item xs={8} sm={9} container direction="column" style={{ backgroundColor: '#2a2a2d' }}>
-                                    <Grid item className={classes.bannerArea}>
-                                        {/* <img className={classes.bannerArea} src="https://i.imgur.com/DIgvyTp.png" alt="banner" /> */}
-                                    </Grid>
+                                    <Grid item className={classes.bannerArea} />
                                     <Grid item container>
                                         <Tabs
                                             className={classes.tabs}
@@ -135,19 +170,38 @@ const Profile = () => {
                         </Hidden>
                         <Hidden smUp>
                             <Grid item container direction="column">
-                                <Grid item container direction="row">
-                                    <Grid item xs={3}>
-                                        <img className={classes.profileImage} src="https://f4.bcbits.com/img/a3508620901_16.jpg" alt="profile" />
+                                <Grid className={classes.mobileHeader} item container direction="column" alignItems="center">
+                                    <Grid item xs={6}>
+                                        <img className={classes.mobileProfileImage} src="https://f4.bcbits.com/img/a3508620901_16.jpg" alt="profile" />
                                     </Grid>
-                                    <Grid item className={classes.mobileBannerArea} xs={9} />
+                                    <Grid item>
+                                        <Typography variant="h5">
+                                            Doggone
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography variant="subtitle1">
+                                            Indie/Alternative • Denver, CO
+                                        </Typography>
+                                    </Grid>
+                                    <Grid className={classes.mobileSocial} item container direction="row" justify="center">
+                                        <FacebookIcon />
+                                        <TwitterIcon />
+                                        <InstagramIcon />
+                                        <BandcampIcon className={classes.icon} />
+                                        <SpotifyIcon className={classes.icon} />
+                                        <SoundcloudIcon className={classes.icon} />
+                                    </Grid>
+                                    <Divider className={classes.divider} />
                                 </Grid>
                                 <Grid item container>
                                     <Tabs
                                         className={classes.tabs}
                                         value={value}
                                         onChange={handleChange}
-                                        centered
+                                        variant="scrollable"
                                     >
+                                        <Tab className={classes.tab} label="About" />
                                         <Tab className={classes.tab} label="Activity" />
                                         <Tab className={classes.tab} label="Shows" />
                                         <Tab className={classes.tab} label="Music" />
@@ -157,86 +211,78 @@ const Profile = () => {
                             </Grid>
                         </Hidden>
                         <Grid item container direction="row">
-                            <Grid item sm={3} xs={4}>
-                                <Paper className={classes.sidebar} square elevation={3}>
-                                    <Grid container direction="column">
-                                        <Grid item>
-                                            <Typography variant="h5">
-                                                Doggone
-                                            </Typography>
-                                        </Grid>
-                                        <Grid className={classes.genresLocation} item container direction="row">
+                            <Hidden xsDown>
+                                <Grid item sm={3} xs={4}>
+                                    <Paper className={classes.sidebar} square elevation={3}>
+                                        <Grid container direction="column">
                                             <Grid item>
-                                                <Typography variant="subtitle1">
-                                                    Indie/Alternative
+                                                <Typography variant="h5">
+                                                    Doggone
                                                 </Typography>
                                             </Grid>
-                                            <Grid className={classes.bull} item>
-                                                <Typography>•</Typography>
+                                            <Grid className={classes.genresLocation} item container direction="row">
+                                                <Grid item>
+                                                    <Typography variant="subtitle1">
+                                                        Indie/Alternative
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid className={classes.bull} item>
+                                                    <Typography>•</Typography>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Typography variant="subtitle2">
+                                                        Denver, CO
+                                                    </Typography>
+                                                </Grid>
                                             </Grid>
+                                            <Grid item container direction="row">
+                                                <FacebookIcon />
+                                                <TwitterIcon />
+                                                <InstagramIcon />
+                                                <BandcampIcon className={classes.icon} />
+                                                <SpotifyIcon className={classes.icon} />
+                                                <SoundcloudIcon className={classes.icon} />
+                                            </Grid>
+                                            <Divider className={classes.divider} />
                                             <Grid item>
-                                                <Typography variant="subtitle2">
-                                                    Denver, CO
+                                                <Typography className={classes.subtitle2} variant="subtitle2">
+                                                    About:
+                                                </Typography>
+                                                <Typography variant="body2">
+                                                    Lorem ipsum dolor amet you probably haven't heard of them unicorn tofu, 
+                                                    heirloom tote bag glossier jianbing poke shoreditch VHS literally selvage. 
+                                                    Hexagon polaroid chicharrones VHS iPhone small batch.
+                                                </Typography>
+                                            </Grid>
+                                            <Divider className={classes.divider} />
+                                            <Grid item>
+                                                <Typography className={classes.subtitle2} variant="subtitle2">
+                                                    Members:
+                                                </Typography>
+                                                <Typography variant="body2">
+                                                    Tyler Masterson - Vocals, Guitar, Bass
+                                                    EzDrummer - Drums
+                                                    Motu Symphonic Instrument - Orchestral Instruments
+                                                </Typography>
+                                            </Grid>
+                                            <Divider className={classes.divider} />
+                                            <Grid item>
+                                                <Typography className={classes.subtitle2} variant="subtitle2">
+                                                    Influences:
+                                                </Typography>
+                                                <Typography variant="body2">
+                                                    Mike Kinsella,
+                                                    Evan Weiss,
+                                                    College
                                                 </Typography>
                                             </Grid>
                                         </Grid>
-                                        <Grid item container direction="row">
-                                            <FacebookIcon />
-                                            <TwitterIcon />
-                                            <InstagramIcon />
-                                            <BandcampIcon className={classes.icon} />
-                                            <SpotifyIcon className={classes.icon} />
-                                            <SoundcloudIcon className={classes.icon} />
-                                        </Grid>
-                                        <Divider className={classes.divider} />
-                                        <Grid item>
-                                            <Typography className={classes.subtitle2} variant="subtitle2">
-                                                About:
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                Lorem ipsum dolor amet you probably haven't heard of them unicorn tofu, 
-                                                heirloom tote bag glossier jianbing poke shoreditch VHS literally selvage. 
-                                                Hexagon polaroid chicharrones VHS iPhone small batch.
-                                            </Typography>
-                                        </Grid>
-                                        <Divider className={classes.divider} />
-                                        <Grid item>
-                                            <Typography className={classes.subtitle2} variant="subtitle2">
-                                                Members:
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                Tyler Masterson - Vocals, Guitar, Bass
-                                                EzDrummer - Drums
-                                                Motu Symphonic Instrument - Orchestral Instruments
-                                            </Typography>
-                                        </Grid>
-                                        <Divider className={classes.divider} />
-                                        <Grid item>
-                                            <Typography className={classes.subtitle2} variant="subtitle2">
-                                                Influences:
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                Mike Kinsella,
-                                                Evan Weiss,
-                                                College
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
+                                    </Paper>
+                                </Grid>
+                            </Hidden>
+                            <Grid item xs={12} sm={9}>
+                                { checkTabValue() }
                             </Grid>
-                            <Grid item xs={8} sm={9}>
-                                {value === 0
-                                    ? <Activity />
-                                    : value === 1
-                                        ? <Shows />
-                                        : value === 2
-                                            ? <Music />
-                                            : value === 3
-                                                ? <Network />
-                                                : null
-                                }
-                            </Grid>
-                            
                         </Grid>
                     </Grid>
                 </Typography>
