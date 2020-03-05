@@ -10,6 +10,7 @@ import Tab from '@material-ui/core/Tab'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import InstagramIcon from '@material-ui/icons/Instagram'
 import TwitterIcon from '@material-ui/icons/Twitter'
+import Hidden from '@material-ui/core/Hidden'
 import {ReactComponent as BandcampIcon} from '../svg/bandcamp.svg'
 import {ReactComponent as SoundcloudIcon} from '../svg/soundcloud.svg'
 import {ReactComponent as SpotifyIcon} from '../svg/spotify.svg'
@@ -32,6 +33,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center'
     },
     bannerArea: {
+        width: '100%',
         height: '80%',
         backgroundImage: `url(${'https://i.imgur.com/DIgvyTp.png'})`,
         backgroundPosition: 'center',
@@ -39,14 +41,20 @@ const useStyles = makeStyles(theme => ({
         borderBottomStyle: 'solid',
         borderWidth: 'medium',
     },
-    profileImage: {
-        height: 250,
-        backgroundImage: `url(${'https://f4.bcbits.com/img/a3508620901_16.jpg'})`, 
-        backgroundSize: 'cover', 
+    mobileBannerArea: {
+        width: '100%',
+        backgroundImage: `url(${'https://i.imgur.com/DIgvyTp.png'})`,
         backgroundPosition: 'center',
+        backgroundSize: 'cover',
         borderBottomStyle: 'solid',
-        borderRightStyle: 'solid',
         borderWidth: 'medium',
+    },
+    profileImage: {
+        width: '100%',
+        height: '100%',
+        borderStyle: 'solid',
+        borderTopStyle: 'none',
+        borderLeftStyle: 'none'
     },
     genresLocation: {
         alignItems: 'center'
@@ -56,7 +64,7 @@ const useStyles = makeStyles(theme => ({
     },
     sidebar: {
         backgroundColor: '#5497c7eb',
-        padding: '20px',
+        padding: '10px',
         borderRightStyle: 'solid',
         height: '100%'
     },
@@ -99,34 +107,57 @@ const Profile = () => {
             <CssBaseLine />
             <Container maxWidth="lg">
                 <Typography component="div" style={{ backgroundColor: 'black' }}>
-                    <Paper elevation={5} square={true}>
-                        <Grid container className={classes.grid} spacing={0} direction="row">
-                            <Grid item xs={3}>
-                                <Paper className={classes.profileImage} elevation={3} square/>
-                            </Grid>
-                            <Grid item xs={9} container style={{ backgroundColor: '#2a2a2d' }}>
-                                <Grid xs={12} className={classes.bannerArea} item container direction="column" justify="flex-end">
-                                    
+                    <Grid container direction="column">
+                        <Hidden xsDown>
+                            <Grid item container className={classes.grid} spacing={0} direction="row">
+                                <Grid item xs={4} sm={3}>
+                                    <img className={classes.profileImage} src="https://f4.bcbits.com/img/a3508620901_16.jpg" alt="profile" />
                                 </Grid>
-                                <Grid item xs={12} container direction="row">
-                                <Tabs
-                                    className={classes.tabs}
-                                    value={value}
-                                    onChange={handleChange}
-                                    centered
-                                >
-                                    <Tab className={classes.tab} label="Activity" />
-                                    <Tab className={classes.tab} label="Shows" />
-                                    <Tab className={classes.tab} label="Music" />
-                                    <Tab className={classes.tab} label="Network" />
-                                </Tabs>
+                                <Grid item xs={8} sm={9} container direction="column" style={{ backgroundColor: '#2a2a2d' }}>
+                                    <Grid item className={classes.bannerArea}>
+                                        {/* <img className={classes.bannerArea} src="https://i.imgur.com/DIgvyTp.png" alt="banner" /> */}
+                                    </Grid>
+                                    <Grid item container>
+                                        <Tabs
+                                            className={classes.tabs}
+                                            value={value}
+                                            onChange={handleChange}
+                                            centered
+                                        >
+                                            <Tab className={classes.tab} label="Activity" />
+                                            <Tab className={classes.tab} label="Shows" />
+                                            <Tab className={classes.tab} label="Music" />
+                                            <Tab className={classes.tab} label="Network" />
+                                        </Tabs>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                    </Paper>
-                    <Paper>
-                        <Grid container direction="row">
-                            <Grid item xs={3}>
+                        </Hidden>
+                        <Hidden smUp>
+                            <Grid item container direction="column">
+                                <Grid item container direction="row">
+                                    <Grid item xs={3}>
+                                        <img className={classes.profileImage} src="https://f4.bcbits.com/img/a3508620901_16.jpg" alt="profile" />
+                                    </Grid>
+                                    <Grid item className={classes.mobileBannerArea} xs={9} />
+                                </Grid>
+                                <Grid item container>
+                                    <Tabs
+                                        className={classes.tabs}
+                                        value={value}
+                                        onChange={handleChange}
+                                        centered
+                                    >
+                                        <Tab className={classes.tab} label="Activity" />
+                                        <Tab className={classes.tab} label="Shows" />
+                                        <Tab className={classes.tab} label="Music" />
+                                        <Tab className={classes.tab} label="Network" />
+                                    </Tabs>
+                                </Grid>
+                            </Grid>
+                        </Hidden>
+                        <Grid item container direction="row">
+                            <Grid item sm={3} xs={4}>
                                 <Paper className={classes.sidebar} square elevation={3}>
                                     <Grid container direction="column">
                                         <Grid item>
@@ -193,7 +224,7 @@ const Profile = () => {
                                     </Grid>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={9}>
+                            <Grid item xs={8} sm={9}>
                                 {value === 0
                                     ? <Activity />
                                     : value === 1
@@ -207,7 +238,7 @@ const Profile = () => {
                             </Grid>
                             
                         </Grid>
-                    </Paper>
+                    </Grid>
                 </Typography>
             </Container>
         </div>
