@@ -8,9 +8,14 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
+import Button from '@material-ui/core/Button'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
 import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
+import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import NotificationsIcon from '@material-ui/icons/Notifications'
@@ -100,6 +105,9 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     color: "#5397c7"
+  },
+  drawerList: {
+    width: 250
   }
 }))
 
@@ -131,9 +139,20 @@ export default function PrimarySearchAppBar(props) {
 
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
+  const [drawer, setDrawer] = React.useState(Boolean)
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
+
+  const toggleDrawer = event => {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    drawer === false
+      ? setDrawer(true)
+      : setDrawer(false)
+    
+  }
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget)
@@ -151,6 +170,28 @@ export default function PrimarySearchAppBar(props) {
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget)
   }
+
+  const sideList = (
+    <div
+      className={classes.drawerList}
+      role="presentation"
+      onClick={toggleDrawer}
+      onKeyDown={toggleDrawer}
+    >
+      <List>
+        {['Dashboard', 'Artists', 'Venues'].map(text => (
+          <ListItem button key={text}>
+            <NavLink 
+              className={classes.link} 
+              component={Link} 
+              to={text === 'Artists' ? '/discover_artists' : `/${text.toLowerCase()}`} >
+                {text}
+            </NavLink>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  )
 
   const menuId = 'primary-search-account-menu'
 
@@ -261,7 +302,6 @@ export default function PrimarySearchAppBar(props) {
       </Link>
     </Menu>
   )
-
   return (
     <div className={classes.grow}>
         <CssBaseLine />
@@ -273,6 +313,14 @@ export default function PrimarySearchAppBar(props) {
                   <img className="navbar-logo" src="https://i.imgur.com/mQWWPgC.png" alt="main-logo"/>
                 </Link>
               </Typography>
+              <Hidden smUp>
+                <IconButton onClick={toggleDrawer} edge="start" color="inherit" aria-label="menu">
+                  <MenuIcon />
+                </IconButton>
+                <SwipeableDrawer open={drawer} onClose={toggleDrawer} onOpen={toggleDrawer}>
+                  {sideList}
+                </SwipeableDrawer>
+              </Hidden>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />

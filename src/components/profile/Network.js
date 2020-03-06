@@ -14,7 +14,8 @@ import {
 const useStyles = makeStyles(theme => ({
     network: {
         padding: '10px',
-        height: '100vh'
+        height: '100vh',
+        backgroundColor: 'black'
     },
     card: {
         maxWidth: 345
@@ -29,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     },
     header: {
         textAlign: 'center',
-        margin: '20px'
+        margin: '20px',
+        color: 'white'
     },
 }))
 
