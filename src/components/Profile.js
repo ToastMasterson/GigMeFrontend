@@ -34,7 +34,8 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center'
     },
     mobileHeader: {
-        color: 'white'
+        color: 'white',
+        marginTop: '10px'
     },
     mobileSocial: {
         backgroundColor: '#4d8bb7',
@@ -201,8 +202,8 @@ const Profile = () => {
                                         onChange={handleChange}
                                         variant="scrollable"
                                     >
-                                        <Tab className={classes.tab} label="About" />
                                         <Tab className={classes.tab} label="Activity" />
+                                        <Tab className={classes.tab} label="About" />
                                         <Tab className={classes.tab} label="Shows" />
                                         <Tab className={classes.tab} label="Music" />
                                         <Tab className={classes.tab} label="Network" />
