@@ -81,7 +81,6 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
     
-    // const [spacing, setSpacing] = React.useState(2);
     const classes = useStyles();
 
     return (

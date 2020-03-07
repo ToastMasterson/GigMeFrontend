@@ -10,10 +10,7 @@ import {
     List, 
     ListItem, 
     ListItemText, 
-    Divider, 
-    TextField, 
-    MenuItem, 
-    Select, 
+    Divider,
     Card, CardMedia, CardContent 
 } from '@material-ui/core'
 
