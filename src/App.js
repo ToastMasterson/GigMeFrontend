@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import firebase, { auth } from './firebase.js'
 import './style_sheets/App.css'
 import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard'

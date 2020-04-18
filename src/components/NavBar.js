@@ -1,5 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import firebase, { auth } from '../firebase.js'
+
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
 import CssBaseLine from '@material-ui/core/CssBaseline'
 import useScrollTrigger  from '@material-ui/core/useScrollTrigger'
@@ -169,6 +171,11 @@ export default function PrimarySearchAppBar(props) {
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget)
+  }
+
+  const handleLogout = () => {
+    auth.signOut()
+    .then(<Redirect to="/" />)
   }
 
   const sideList = (
@@ -369,6 +376,7 @@ export default function PrimarySearchAppBar(props) {
                 >
                   <AccountCircle />
                 </IconButton>
+                <Button onClick={handleLogout} size="small" style={{ textTransform: "none", color: '#5397c7' }}>Logout</Button>
               </div>
               <div className={classes.sectionMobile}>
                 <IconButton
