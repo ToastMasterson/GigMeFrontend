@@ -1,5 +1,5 @@
 import React from 'react'
-import firebase, { auth, provider } from '../firebase.js'
+import { signup, signin, signout } from '../redux/actions/auth'
 import PropTypes from 'prop-types'
 import CssBaseLine from '@material-ui/core/CssBaseline'
 import Typography from '@material-ui/core/Typography'
@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button'
 import {ReactComponent as GoogleIcon} from '../svg/google.svg'
 import { makeStyles, Box, Tab, Tabs, TextField } from '@material-ui/core'
 import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 
 const useStyles = makeStyles(theme => ({
@@ -45,9 +46,6 @@ const useStyles = makeStyles(theme => ({
         color: '#c2c2dc',
         fontFamily: 'Montserrat',
         fontStyle: 'italic',
-        // backgroundColor: '#30e2e46b',
-        // boxShadow: '0px 0px 30px #30e2e4e8',
-        // borderRadius: '60px',
         textShadow: '4px 5px 8px',
         marginBottom: '100px'
     },
@@ -111,7 +109,7 @@ const LinkTab = (props) => {
     )
 }
 
-const Landing = () => {
+const Landing = ({ signup, signin, signout, auth, authMsg }) => {
 
     const classes = useStyles()
     const [state, setState] = React.useState({
@@ -234,4 +232,20 @@ const Landing = () => {
     )
 }
 
-export default Landing
+const mapStateToProps = (state) => {
+    return {
+        authMsg: state.authReducer.authMsg,
+        auth: state.firebaseReducer.auth
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signup: (email, password) => dispatch(signup(email, password)),
+        signin: (email, password, callback) =>
+        dispatch(signin(email, password, callback)),
+        signout: () => dispatch(signout())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing)
