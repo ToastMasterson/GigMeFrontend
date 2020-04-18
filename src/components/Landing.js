@@ -8,7 +8,9 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
-import { makeStyles, Box, Tab, Tabs } from '@material-ui/core'
+import {ReactComponent as GoogleIcon} from '../svg/google.svg'
+import { makeStyles, Box, Tab, Tabs, TextField } from '@material-ui/core'
+import { Redirect } from 'react-router-dom'
 
 
 const useStyles = makeStyles(theme => ({
@@ -113,11 +115,17 @@ const Landing = () => {
 
     const classes = useStyles()
     const [state, setState] = React.useState({
-        user: null,
-        value: 0
+        user: auth.user,
+        value: 0,
+        email: "",
+        password: ""
     })
 
-    const handleChange = ( event, newValue ) => {
+    const handleFormChange = (event) => {
+        setState({ [event.target.name]: [event.target.value] })
+    }
+
+    const handleTabChange = ( event, newValue ) => {
         setState({ value: newValue })
     }
     const gLogIn = () => {
@@ -128,12 +136,32 @@ const Landing = () => {
         })
     }
 
-    const signUp = () => {
-
+    const emailAndPasswordLogIn = () => {
+        auth.signInWithEmailAndPassword()
+        .then((result) => {
+            const user = result.user
+            setState({ user })
+        })
     }
 
+    const emailAndPasswordRegister = () => {
+        auth.createUserWithEmailAndPassword()
+        .then((result) => {
+            const user = result.user
+            setState({ user })
+        })
+    }
+
+    const gRegister = () => {
+        auth.signInWithPopup(provider)
+        .then((result) => {
+            const user = result.user
+            setState({ user })
+        })
+    }
     return (
         <div className="landing">
+            {state.user !== undefined ? <Redirect to="/dashboard" /> : null }
             <CssBaseLine />
             <Container className={classes.container} maxWidth='lg'>
                     <Paper className={classes.paper} elevation={3} square={true}>
@@ -148,20 +176,54 @@ const Landing = () => {
                             </Grid>
                             <Divider className={classes.divider} variant="fullWidth"/>
                             <Grid className={classes.gridItem} item xs container justify="center" spacing={2}>
-                                <Paper>
+                                <Paper style={{width: '30rem'}}>
                                     <Tabs
                                         variant="fullWidth"
                                         value={state.value}
-                                        onChange={handleChange}
+                                        onChange={handleTabChange}
                                     >
                                         <LinkTab label="Log In" href="/login" { ...a11yProps(0)} />
                                         <LinkTab label="Sign Up" href="/signup" { ...a11yProps(1)} />
                                     </Tabs>
                                     <TabPanel value={state.value} index={0}>
-                                        Log In
+                                        <Grid container alignItems="center" spacing={2}>
+                                            <Grid item xs={6}>
+                                                <TextField onChange={handleFormChange} name="email" variant="outlined" size="small" label="Email" />
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <TextField onChange={handleFormChange} name="password" variant="outlined" size="small" label="Password" />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Button onClick={emailAndPasswordLogIn} variant="outlined">Log In</Button>
+                                            </Grid>
+                                            <Divider variant="fullWidth" />
+                                            <Grid item xs={12}>
+                                                <Button onClick={gLogIn} variant="outlined">
+                                                    <GoogleIcon style={{width: 30, marginRight: 5}} />
+                                                    Sign in with Google
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
                                     </TabPanel>
                                     <TabPanel value={state.value} index={1}>
-                                        Sign Up
+                                    <Grid container alignItems="center" spacing={2}>
+                                            <Grid item xs={6}>
+                                                <TextField onChange={handleFormChange} name="email" variant="outlined" size="small" label="Email" />
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <TextField onChange={handleFormChange} name="password" variant="outlined" size="small" label="Password" />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Button onClick={emailAndPasswordRegister} variant="outlined">Register</Button>
+                                            </Grid>
+                                            <Divider variant="fullWidth" />
+                                            <Grid item xs={12}>
+                                                <Button onClick={gRegister} variant="outlined">
+                                                    <GoogleIcon style={{width: 30, marginRight: 5}} />
+                                                    Sign up with Google
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
                                     </TabPanel>
                                 </Paper>
                             </Grid>
