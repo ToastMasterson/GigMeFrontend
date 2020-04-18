@@ -1,5 +1,6 @@
 import React from 'react'
 import { signup, signin, signout } from '../redux/actions/auth'
+import firebase, {provider} from '../firebase.js'
 import PropTypes from 'prop-types'
 import CssBaseLine from '@material-ui/core/CssBaseline'
 import Typography from '@material-ui/core/Typography'
